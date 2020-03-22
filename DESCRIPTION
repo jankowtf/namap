@@ -7,9 +7,11 @@ Authors@R: person("Janko", "Thyson", email = "janko.thyson@rappster.io",
 Description: Manage and systematically replace column/field names based on YAML file configurations
 License: MIT + file LICENSE
 Imports: 
-    lifecycle
+    lifecycle,
+    confx
 Suggests: 
-    testthat (>= 2.1.0)
+    testthat (>= 2.1.0),
+    covr
 Remotes:
     rappster/confx
 RdMacros: 

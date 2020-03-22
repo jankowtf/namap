@@ -3,3 +3,4 @@ python/
 staging/
 cache/
 cache_docker/
+local/

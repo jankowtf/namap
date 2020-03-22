@@ -1,0 +1,25 @@
+default:
+  cols:
+    global:
+      # Inbound:
+      id:
+        internal: id
+        external: "Some ID"
+        external_clean: some_id
+      date:
+        internal: date
+        external: Date
+        external_clean: some_date
+      name:
+        internal: name
+        external: Name
+        external_clean: name
+      surname:
+        internal: surname
+        external: Surname
+        external_clean: surname
+      value:
+        internal: value
+        external: (Some) value
+        external_clean: some_value
+
