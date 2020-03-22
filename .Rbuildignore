@@ -1,0 +1,8 @@
+^.*\.Rproj$
+^\.Rproj\.user$
+^renv$
+^renv\.lock$
+^README\.Rmd$
+^\.travis\.yml$
+^LICENSE\.md$
+^data$
