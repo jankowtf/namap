@@ -15,14 +15,28 @@
 get_name <- function(
   x,
   type = valid__name_types(),
+  mapping = list(),
   as_character = FALSE
 ) {
   type <- match.arg(type)
 
-  names <- x %>%
-    confx::conf_get(from = Sys.getenv("R_CONFIG_NAMES", "config.yml"))
+  R_CONFIG_NAMES <- Sys.getenv("R_CONFIG_NAMES", "config.yml")
+  yaml_path_dir <- R_CONFIG_NAMES %>% fs::path_dir()
+  yaml_path_file <- R_CONFIG_NAMES %>% fs::path_file()
 
-  name <- names[[type]]
+  names <- if (!length(mapping)) {
+    x %>%
+      confx::conf_get(from = yaml_path_file, dir_from = yaml_path_dir)
+  } else {
+    stop("Mapping definition via explit argument not supported yet")
+  }
+
+  name <- if (type != "external_clean") {
+    names[[type]]
+  } else {
+    names %>%
+      trans__to_external_clean()
+  }
 
   if (!as_character) {
     name %>%
@@ -49,15 +63,33 @@ get_name <- function(
 get_names <- function(
   ...,
   type = valid__name_types(),
+  mapping = list(),
   as_character = FALSE
 ) {
   dots <- rlang::list2(...)
   type <- match.arg(type)
 
+  R_CONFIG_NAMES <- Sys.getenv("R_CONFIG_NAMES", "config.yml")
+  yaml_path_dir <- R_CONFIG_NAMES %>% fs::path_dir()
+  yaml_path_file <- R_CONFIG_NAMES %>% fs::path_file()
+
   dots %>%
-    purrr::map(~.x %>%
-        confx::conf_get(from = Sys.getenv("R_CONFIG_NAMES", "config.yml")) %>%
-        purrr::pluck(type) %>%
+    purrr::map(function(.x) {
+      names <- if (!length(mapping)) {
+        .x %>%
+          confx::conf_get(from = yaml_path_file, dir_from = yaml_path_dir)
+      } else {
+        stop("Mapping definition via explit argument not supported yet")
+      }
+
+      names %>%
+        {
+          if (type != "external_clean") {
+            purrr::pluck(., type)
+          } else {
+            trans__to_external_clean(.)
+          }
+        } %>%
         {
           if (!as_character) {
             dplyr::sym(.)
@@ -65,5 +97,5 @@ get_names <- function(
             .
           }
         }
-    )
+    })
 }

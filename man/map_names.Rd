@@ -4,18 +4,18 @@
 \alias{map_names}
 \title{Map column names from/to internal/external value \lifecycle{experimental}}
 \usage{
-map_names(cols, from, to)
+map_names(mapping, from, to)
 }
 \arguments{
-\item{cols}{Mapping information. The actual value depends on the method to be
+\item{mapping}{Mapping information. The actual value depends on the method to be
 used (\code{namap::map_names.list()} and
 \code{namap::map_names.character()})
 \code{confx::conf_get()}}
 
-\item{from}{[\link{character}] List element from \code{cols} arg to describe the source
+\item{from}{[\link{character}] List element from \code{mapping} arg to describe the source
 of the mapping}
 
-\item{to}{[\link{character}] List element from \code{cols} arg to describe the target
+\item{to}{[\link{character}] List element from \code{mapping} arg to describe the target
 of the mapping}
 }
 \value{

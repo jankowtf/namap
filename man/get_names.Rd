@@ -4,7 +4,12 @@
 \alias{get_names}
 \title{Get names from config \lifecycle{experimental}}
 \usage{
-get_names(..., type = valid__name_types(), as_character = FALSE)
+get_names(
+  ...,
+  type = valid__name_types(),
+  mapping = list(),
+  as_character = FALSE
+)
 }
 \arguments{
 \item{...}{[\link{character}] Name identifiers}

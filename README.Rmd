@@ -45,7 +45,6 @@ data <- tibble::tibble(
   Surname = c("Doe", "Doe", "Deo"),
   `Some Value` = 1:3
 )
-
 ```
 
 ### Rename based on mapping specification
@@ -53,7 +52,7 @@ data <- tibble::tibble(
 From (messy) external to clean internal names:
 
 ```{r}
-cols <- list(
+names_mapping <- list(
   list(external = "Some ID", internal = "id"),
   list(external = "Date", internal = "date"),
   list(external = "Name", internal = "name"),
@@ -61,37 +60,47 @@ cols <- list(
   list(external = "Some Value", internal = "value")
 )
 
-col_mapping <- namap::map_names(
-  cols = cols,
+cols <- namap::map_names(
+  mapping = names_mapping,
   from = "external",
   to = "internal"
 )
 
 date_renamed <- data %>% 
-  dplyr::rename(!!!col_mapping)
+  dplyr::rename(!!!cols)
 date_renamed
 ```
 
 From internal to external names:
 
 ```{r}
-col_mapping <- namap::map_names(
-  cols = cols,
+cols <- namap::map_names(
+  mapping = names_mapping,
   from = "internal",
   to = "external"
 )
 
 date_renamed %>%  
-  dplyr::rename(!!!col_mapping)
+  dplyr::rename(!!!cols)
 ```
 
-### Usage together with `{confx}`
+--------------------------------------------------------------------------------
+
+## Using a YAML file that contains the name mapping definitions
 
 If you use this package in conjunction with
 [confx](https://github.com/rappster/confx), the name mapping specification could
 be part of a YAML file (e.g. `./config.yml`):
 
-```
+**NOTE: What I illustrate below currently doesn't work yet as YAML files outside
+the project/package root directory will cause an error. This is a current
+limitation of package `{confx}` as it relies on `{here}`. After createing a YAML
+file with above content inside your root directory, the following will work**
+
+### Create example YAML content
+
+```{r, eval=FALSE}
+yaml_content <- '
 default:
   cols:
     id:
@@ -109,12 +118,22 @@ default:
     value:
       internal: value
       external: (Some) value
+'
+
+temp_file <- tempfile(fileext = ".yml")
+write(yaml_content, temp_file)
 ```
 
-You could then call `map_names()` in the following way:
+Set environment variable that `get_name()` and `get_names()` uses internally.
 
 ```{r, eval=FALSE}
-cols <- list(
+Sys.setenv(R_CONFIG_NAMES = temp_file)
+```
+
+### Map names using `{confx}`
+
+```{r, eval=FALSE}
+names_mapping <- list(
   confx::conf_get("cols/id"),
   confx::conf_get("cols/date"),
   confx::conf_get("cols/name"),
@@ -122,8 +141,8 @@ cols <- list(
   confx::conf_get("cols/value")
 )
 
-col_mapping <- namap::map_names(
-  cols = cols,
+cols <- namap::map_names(
+  mapping = names_mapping,
   from = "external",
   to = "internal"
 )
@@ -132,7 +151,7 @@ col_mapping <- namap::map_names(
 Or even simpler:
 
 ```{r, eval=FALSE}
-cols <- c(
+names <- c(
   "cols/id",
   "cols/date",
   "cols/name",
@@ -140,9 +159,41 @@ cols <- c(
   "cols/value"
 )
 
-col_mapping <- namap::map_names(
-  cols = cols,
+cols <- namap::map_names(
+  mapping = names,
   from = "external",
   to = "internal"
+)
+```
+
+### Get single name from mapping definition
+
+```{r, eval=FALSE}
+namap::get_name("cols/global/id")
+namap::get_name("cols/global/id", type = "external")
+namap::get_name("cols/global/id", type = "external_clean")
+```
+
+### Get multiple names from mapping definition
+
+```{r, eval=FALSE}
+namap::get_names(
+  "cols/global/id",
+  "cols/global/date",
+  "cols/global/name"
+)
+
+namap::get_names(
+  "cols/global/id",
+  "cols/global/date",
+  "cols/global/name", 
+  type = "external"
+)
+
+namap::get_names(
+  "cols/global/id",
+  "cols/global/date",
+  "cols/global/name",
+  type = "external_clean"
 )
 ```

@@ -1,12 +1,12 @@
 #' Map column names from/to internal/external value \lifecycle{experimental}
 #'
-#' @param cols Mapping information. The actual value depends on the method to be
+#' @param mapping Mapping information. The actual value depends on the method to be
 #'   used (`namap::map_names.list()` and
 #'   `namap::map_names.character()`)
 #'   `confx::conf_get()`
-#' @param from [[character]] List element from `cols` arg to describe the source
+#' @param from [[character]] List element from `mapping` arg to describe the source
 #'   of the mapping
-#' @param to [[character]] List element from `cols` arg to describe the target
+#' @param to [[character]] List element from `mapping` arg to describe the target
 #'   of the mapping
 #'
 #' @return [[list]] List that can be used in conjunctin with the `!!!` in
@@ -14,22 +14,22 @@
 #'   `list(<to> = "<from>")`
 #' @export
 map_names <- function(
-  cols,
+  mapping,
   from,
   to
 ) {
-  UseMethod("map_names", cols)
+  UseMethod("map_names", mapping)
 }
 
 #' Map column names from/to internal/external value \lifecycle{experimental}
 #'
-#' @param cols [[list]] List containing the mapping information (`list(internal
+#' @param mapping [[list]] List containing the mapping information (`list(internal
 #'   = <value>, external = <value>)`) or list of such lists for multiple
 #'   columns. It is suggested that this is read from a YAML config file via
 #'   `confx::conf_get()`
-#' @param from [[character]] List element from `cols` arg to describe the source
+#' @param from [[character]] List element from `mapping` arg to describe the source
 #'   of the mapping
-#' @param to [[character]] List element from `cols` arg to describe the target
+#' @param to [[character]] List element from `mapping` arg to describe the target
 #'   of the mapping
 #'
 #' @return [[list]] List that can be used in conjunctin with the `!!!` in
@@ -37,21 +37,21 @@ map_names <- function(
 #'   `list(<to> = "<from>")`
 #' @export
 map_names.list <- function(
-  cols,
+  mapping,
   from = "external",
   to = "internal"
 ) {
   # Wrap into list if single column data:
-  if (cols %>%
+  if (mapping %>%
       names() %>%
       # is.null() %>%
       purrr::negate(is.null)() %>%
       all()
   ) {
-    cols <- list(cols)
+    mapping <- list(mapping)
   }
 
-  cols %>%
+  mapping %>%
     purrr::map(~
         list(.x[[from]]) %>%
           purrr::set_names(.x[[to]])) %>%
@@ -60,13 +60,13 @@ map_names.list <- function(
 
 #' Map column names from/to internal/external value \lifecycle{experimental}
 #'
-#' @param cols [[list]] List containing the mapping information (`list(internal
+#' @param mapping [[list]] List containing the mapping information (`list(internal
 #'   = <value>, external = <value>)`) or list of such lists for multiple
 #'   columns. It is suggested that this is read from a YAML config file via
 #'   `confx::conf_get()`
-#' @param from [[character]] List element from `cols` arg to describe the source
+#' @param from [[character]] List element from `mapping` arg to describe the source
 #'   of the mapping
-#' @param to [[character]] List element from `cols` arg to describe the target
+#' @param to [[character]] List element from `mapping` arg to describe the target
 #'   of the mapping
 #'
 #' @return [[list]] List that can be used in conjunctin with the `!!!` in
@@ -74,14 +74,16 @@ map_names.list <- function(
 #'   `list(<to> = "<from>")`
 #' @export
 map_names.character <- function(
-  cols,
+  mapping,
   from = "external",
   to = "internal"
 ) {
-  cols <- cols %>%
-    purrr::map(~.x %>% confx::conf_get())
+  mapping <- mapping %>%
+    purrr::map(~.x %>% confx::conf_get(
+      from = Sys.getenv("R_CONFIG_NAMES", "config.yml"))
+    )
 
-  cols %>%
+  mapping %>%
     map_names(
       from = from,
       to = to

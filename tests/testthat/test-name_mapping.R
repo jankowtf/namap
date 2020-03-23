@@ -16,7 +16,7 @@ data <- tibble::tibble(
 
 test_that("Name mapping: single column, list, external -> internal", {
   is <- map_names(
-    cols = confx::conf_get("cols/global/id"),
+    mapping = confx::conf_get("cols/global/id", from = Sys.getenv("R_CONFIG_NAMES")),
     from = "external",
     to = "internal"
   )
@@ -28,7 +28,7 @@ test_that("Name mapping: single column, list, external -> internal", {
 
 test_that("Name mapping: single column, character, external -> internal", {
   is <- map_names(
-    cols = "cols/global/id",
+    mapping = "cols/global/id",
     from = "external",
     to = "internal"
   )
@@ -40,9 +40,9 @@ test_that("Name mapping: single column, character, external -> internal", {
 
 test_that("Name mapping: multiple columns, list, external -> internal", {
   is <- map_names(
-    cols = list(
-      confx::conf_get("cols/global/id"),
-      confx::conf_get("cols/global/date")
+    mapping = list(
+      confx::conf_get("cols/global/id", from = Sys.getenv("R_CONFIG_NAMES")),
+      confx::conf_get("cols/global/date", from = Sys.getenv("R_CONFIG_NAMES"))
     ),
     from = "external",
     to = "internal"
@@ -55,7 +55,7 @@ test_that("Name mapping: multiple columns, list, external -> internal", {
 
 test_that("Name mapping: multiple columns, list, external -> internal", {
   is <- map_names(
-    cols = c(
+    mapping = c(
       "cols/global/id",
       "cols/global/date"
     ),
@@ -72,7 +72,7 @@ test_that("Name mapping: multiple columns, list, external -> internal", {
 
 test_that("Name mapping: single column, list, internal -> external", {
   is <- map_names(
-    cols = confx::conf_get("cols/global/id"),
+    mapping = confx::conf_get("cols/global/id", from = Sys.getenv("R_CONFIG_NAMES")),
     from = "internal",
     to = "external"
   )
@@ -84,7 +84,7 @@ test_that("Name mapping: single column, list, internal -> external", {
 
 test_that("Name mapping: single column, character, internal -> external", {
   is <- map_names(
-    cols = "cols/global/id",
+    mapping = "cols/global/id",
     from = "internal",
     to = "external"
   )
@@ -96,9 +96,9 @@ test_that("Name mapping: single column, character, internal -> external", {
 
 test_that("Name mapping: multiple columns, list, internal -> external", {
   is <- map_names(
-    cols = list(
-      confx::conf_get("cols/global/id"),
-      confx::conf_get("cols/global/date")
+    mapping = list(
+      confx::conf_get("cols/global/id", from = Sys.getenv("R_CONFIG_NAMES")),
+      confx::conf_get("cols/global/date", from = Sys.getenv("R_CONFIG_NAMES"))
     ),
     from = "internal",
     to = "external"
@@ -111,7 +111,7 @@ test_that("Name mapping: multiple columns, list, internal -> external", {
 
 test_that("Name mapping: multiple columns, list, internal -> external", {
   is <- map_names(
-    cols = c(
+    mapping = c(
       "cols/global/id",
       "cols/global/date"
     ),

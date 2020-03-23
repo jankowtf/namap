@@ -23,11 +23,13 @@ usethis::use_lifecycle()
 usethis::use_travis()
 usethis::use_coverage()
 
-
 # Package dependencies ----------------------------------------------------
 
 renv::install("rappster/confx")
 usethis::use_package("confx")
+
+renv::install("snakecase")
+usethis::use_package("snakecase")
 
 remotes::install_github("tidyverse/rlang", upgrade = "never")
 remotes::install_github("r-lib/vctrs", upgrade = "never")
@@ -37,7 +39,6 @@ if (FALSE) {
   # Actual dependencies:
   # renv::install("logger")
 }
-
 
 # v0.0.0.9000 -------------------------------------------------------------
 

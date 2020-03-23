@@ -4,17 +4,17 @@
 \alias{map_names.list}
 \title{Map column names from/to internal/external value \lifecycle{experimental}}
 \usage{
-\method{map_names}{list}(cols, from = "external", to = "internal")
+\method{map_names}{list}(mapping, from = "external", to = "internal")
 }
 \arguments{
-\item{cols}{[\link{list}] List containing the mapping information (\verb{list(internal = <value>, external = <value>)}) or list of such lists for multiple
+\item{mapping}{[\link{list}] List containing the mapping information (\verb{list(internal = <value>, external = <value>)}) or list of such lists for multiple
 columns. It is suggested that this is read from a YAML config file via
 \code{confx::conf_get()}}
 
-\item{from}{[\link{character}] List element from \code{cols} arg to describe the source
+\item{from}{[\link{character}] List element from \code{mapping} arg to describe the source
 of the mapping}
 
-\item{to}{[\link{character}] List element from \code{cols} arg to describe the target
+\item{to}{[\link{character}] List element from \code{mapping} arg to describe the target
 of the mapping}
 }
 \value{

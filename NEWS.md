@@ -1,3 +1,13 @@
+# namap 0.0.0.9002
+
+Automatic cleaning of external names
+
+- Automatic cleaning of external names (`$external_clean`)
+- Created function `trans__to_external_clean()`
+- Started to flexiblize location of YAML file (WIP)
+
+--------------------------------------------------------------------------------
+
 # namap 0.0.0.9001
 
 - Added function `get_name()`

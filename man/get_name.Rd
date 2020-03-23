@@ -4,7 +4,7 @@
 \alias{get_name}
 \title{Get name from config \lifecycle{experimental}}
 \usage{
-get_name(x, type = valid__name_types(), as_character = FALSE)
+get_name(x, type = valid__name_types(), mapping = list(), as_character = FALSE)
 }
 \arguments{
 \item{x}{[\link{character}] Name identifier}

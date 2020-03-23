@@ -5,7 +5,7 @@ default:
       id:
         internal: id
         external: "Some ID"
-        external_clean: some_id
+        #external_clean: some_id
       date:
         internal: date
         external: Date
