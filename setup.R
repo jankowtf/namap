@@ -43,6 +43,7 @@ remotes::install_github("tidyverse/dplyr", upgrade = "never")
 
 usethis::use_package("devtools")
 usethis::use_package("here")
+usethis::use_package("magrittr")
 
 if (FALSE) {
   # Actual dependencies:
