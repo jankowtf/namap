@@ -18,7 +18,10 @@ get_name <- function(
   mapping = list(),
   as_character = FALSE
 ) {
+  is_missing <- missing(type)
   type <- match.arg(type)
+  type <- type %>%
+    env__handle_name_type(was_missing = is_missing)
 
   R_CONFIG_NAMES <- Sys.getenv("R_CONFIG_NAMES", "config.yml")
   yaml_path_dir <- R_CONFIG_NAMES %>% fs::path_dir()
@@ -66,8 +69,12 @@ get_names <- function(
   mapping = list(),
   as_character = FALSE
 ) {
-  dots <- rlang::list2(...)
+  is_missing <- missing(type)
   type <- match.arg(type)
+  type <- type %>%
+    env__handle_name_type(was_missing = is_missing)
+
+  dots <- rlang::list2(...)
 
   R_CONFIG_NAMES <- Sys.getenv("R_CONFIG_NAMES", "config.yml")
   yaml_path_dir <- R_CONFIG_NAMES %>% fs::path_dir()

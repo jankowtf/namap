@@ -41,6 +41,11 @@ map_names.list <- function(
   from = "external",
   to = "internal"
 ) {
+  # Input handling:
+  valid_types <- valid__name_types()
+  stopifnot(from %in% valid_types)
+  stopifnot(to %in% valid_types)
+
   # Wrap into list if single column data:
   if (mapping %>%
       names() %>%
@@ -78,6 +83,11 @@ map_names.character <- function(
   from = "external",
   to = "internal"
 ) {
+  # Input handling:
+  valid_types <- valid__name_types()
+  stopifnot(from %in% valid_types)
+  stopifnot(to %in% valid_types)
+
   mapping <- mapping %>%
     purrr::map(~.x %>% confx::conf_get(
       from = Sys.getenv("R_CONFIG_NAMES", "config.yml"))
