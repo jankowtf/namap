@@ -68,6 +68,62 @@ test_that("Name mapping: multiple columns, list, external -> internal", {
   expect_equal(is, should)
 })
 
+# External clean to internal ----------------------------------------------
+
+test_that("Name mapping: single column, list, external clean -> internal", {
+  is <- map_names(
+    mapping = confx::conf_get("cols/global/id", from = Sys.getenv("R_CONFIG_NAMES")),
+    from = "external_clean",
+    to = "internal"
+  )
+
+  should <- list(id = "some_id")
+
+  expect_equal(is, should)
+})
+
+test_that("Name mapping: single column, character, external clean -> internal", {
+  is <- map_names(
+    mapping = "cols/global/id",
+    from = "external_clean",
+    to = "internal"
+  )
+
+  should <- list(id = "some_id")
+
+  expect_equal(is, should)
+})
+
+test_that("Name mapping: multiple columns, list, external clean -> internal", {
+  is <- map_names(
+    mapping = list(
+      confx::conf_get("cols/global/id", from = Sys.getenv("R_CONFIG_NAMES")),
+      confx::conf_get("cols/global/date", from = Sys.getenv("R_CONFIG_NAMES"))
+    ),
+    from = "external_clean",
+    to = "internal"
+  )
+
+  should <- list(id = "some_id", date = "date")
+
+  expect_equal(is, should)
+})
+
+test_that("Name mapping: multiple columns, list, external clean -> internal", {
+  is <- map_names(
+    mapping = c(
+      "cols/global/id",
+      "cols/global/date"
+    ),
+    from = "external_clean",
+    to = "internal"
+  )
+
+  should <- list(id = "some_id", date = "date")
+
+  expect_equal(is, should)
+})
+
 # Internal to external ----------------------------------------------------
 
 test_that("Name mapping: single column, list, internal -> external", {

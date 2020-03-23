@@ -57,10 +57,22 @@ map_names.list <- function(
   }
 
   mapping %>%
-    purrr::map(~
-        list(.x[[from]]) %>%
-          purrr::set_names(.x[[to]])) %>%
+    # purrr::map(~
+    #     list(.x[[from]]) %>%
+    #       purrr::set_names(.x[[to]])) %>%
+    purrr::map(function(.x) {
+      value <- if (from != "external_clean") {
+        .x[[from]]
+      } else {
+        .x %>%
+          trans__to_external_clean()
+      }
+      list(value) %>%
+        purrr::set_names(.x[[to]])
+    }) %>%
     purrr::flatten()
+
+
 }
 
 #' Map column names from/to internal/external value \lifecycle{experimental}
