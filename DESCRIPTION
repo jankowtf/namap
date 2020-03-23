@@ -1,7 +1,7 @@
 Type: Package
 Package: namap
 Title: Systematic name mapping
-Version: 0.0.0.9000
+Version: 0.0.0.9001
 Authors@R: person("Janko", "Thyson", email = "janko.thyson@rappster.io",
                   role = c("aut", "cre"))
 Description: Manage and systematically replace column/field names based on YAML file configurations

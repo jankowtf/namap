@@ -2,5 +2,7 @@
 
 S3method(map_names,character)
 S3method(map_names,list)
+export(get_name)
+export(get_names)
 export(map_names)
 importFrom(lifecycle,deprecate_soft)

@@ -43,3 +43,7 @@ if (FALSE) {
 
 # 2020-03-22
 usethis::use_test("name_mapping")
+
+# 2020-03-23
+usethis::use_test("get")
+usethis::use_test("valid")
