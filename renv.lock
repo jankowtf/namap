@@ -147,6 +147,13 @@
       "Repository": "CRAN",
       "Hash": "6c8fe8fa26a23b79949375d372c7b395"
     },
+    "devtools": {
+      "Package": "devtools",
+      "Version": "2.2.2",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "e12b66f9f6dc41b765b047b4df4b4a38"
+    },
     "digest": {
       "Package": "digest",
       "Version": "0.6.25",
@@ -209,6 +216,13 @@
       "Source": "Repository",
       "Repository": "CRAN",
       "Hash": "af1f47b63d1aa2206c1fe4d3db1d9366"
+    },
+    "here": {
+      "Package": "here",
+      "Version": "0.1",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "2c0406b8e0a4c3516ab37be62da74e3c"
     },
     "highr": {
       "Package": "highr",
@@ -310,7 +324,7 @@
     },
     "namap": {
       "Package": "namap",
-      "Version": "0.0.0.9002",
+      "Version": "0.0.0.9003",
       "Source": "Filesystem"
     },
     "openssl": {

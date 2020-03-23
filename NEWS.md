@@ -1,3 +1,11 @@
+# namap 0.0.0.9003
+
+Added necessary dependencies to DESCRIPTION file
+
+- `{devtools}` and `{here}` as currently still needed by `{confx}`
+
+--------------------------------------------------------------------------------
+
 # namap 0.0.0.9002
 
 Automatic cleaning of external names

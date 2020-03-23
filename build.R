@@ -33,8 +33,8 @@ package_name <- devtools::as.package(".")$package
 # the hit list
 if (ignore_dev_packages) {
   renv::settings$ignored.packages(c(
-    "devtools",
-    "here",
+    # "devtools",
+    # "here",
     "reprex",
     "roxygen2",
     "testthat",

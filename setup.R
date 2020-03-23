@@ -22,6 +22,12 @@ usethis::use_lifecycle()
 # After initial git commit:
 usethis::use_travis()
 usethis::use_coverage()
+cred <- git2r::cred_ssh_key(
+  "~/.ssh/id_rsa.pub",
+  "~/.ssh/id_rsa"
+)
+repo <- git2r::repository(".git")
+git2r::push(repo, credentials = cred)
 
 # Package dependencies ----------------------------------------------------
 
@@ -34,6 +40,9 @@ usethis::use_package("snakecase")
 remotes::install_github("tidyverse/rlang", upgrade = "never")
 remotes::install_github("r-lib/vctrs", upgrade = "never")
 remotes::install_github("tidyverse/dplyr", upgrade = "never")
+
+usethis::use_package("devtools")
+usethis::use_package("here")
 
 if (FALSE) {
   # Actual dependencies:
